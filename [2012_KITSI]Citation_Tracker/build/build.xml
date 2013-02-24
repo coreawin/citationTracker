@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="EUC-KR" ?>
+<project name="Citation Tracker" default="main">
+	<property name="src.dir" value="../" />
+	<property name="target.dir" value="j:\distribution\KISTI\Citation_Tracker" />
+
+	<tstamp>
+		<format property="TODAY" pattern="yyyy-MM-dd hh-mm-ss" locale="ko,KR" />
+	</tstamp>
+
+	<!-- 타겟 디렉토리 생성 -->
+	<target name="makeDir">
+		<delete dir="${target.dir}" failonerror="false" includeemptydirs="true" />
+		<mkdir dir="${target.dir}/${TODAY}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${target.dir}/work/" />
+		<mkdir dir="${target.dir}/lib/" />
+		<mkdir dir="${target.dir}/jre/" />
+	</target>
+
+	<!-- jar 생성 -->
+	<target name="makeJar" depends="makeDir">
+		<jar destfile="${target.dir}/lib/citation_tracker-1.0.0.jar" update="true">
+			<fileset dir="${src.dir}/bin/">
+				<include name="kr/co/topquadrant/**" />
+				<include name="org/eclipse/wb/swt/**" />
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- 파일 복사 -->
+	<target name="copyFile" depends="makeJar">
+
+		<copy todir="${target.dir}/lib" preservelastmodified="true" verbose="true">
+			<fileset dir="${src.dir}/lib/">
+			</fileset>
+		</copy>
+
+		<copy todir="${target.dir}/jre" preservelastmodified="true" verbose="true">
+			<fileset dir="${src.dir}/jre/">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${target.dir}" preservelastmodified="true" verbose="true">
+			<fileset dir="${src.dir}">
+				<include name="*.bat" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="main" depends="copyFile">
+	</target>
+
+</project>
