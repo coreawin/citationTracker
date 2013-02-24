@@ -54,19 +54,18 @@ public abstract class ExecuteJob {
 	private void readDataFile() throws Exception {
 		try {
 			ConsoleOut.getInsance().info("파일로부터 분석 대상 데이터를 수집하고 있습니다.");
-			ExcelReader er = new ExcelReader(this.parameter.getInputFilePath());
-			this.datas = er.getIDData();
-			ConsoleOut.getInsance().info("분석대상 데이터 수집을 완료하였습니다.");
-		} catch (IllegalArgumentException iae) {
-			// 엑셀로는 읽을수 없는 파일이다. 
 			
-			//이 파일이 csv 인가?
 			if(this.parameter.getInputFilePath().endsWith(".csv")){
 				CSVReader cr = new CSVReader(this.parameter.getInputFilePath());
 				this.datas = cr.getIDData();
+			}else{
+				ExcelReader er = new ExcelReader(this.parameter.getInputFilePath());
+				this.datas = er.getIDData();
+				ConsoleOut.getInsance().info("분석대상 데이터 수집을 완료하였습니다.");
 			}
 		} catch (Exception e) {
 			throw e;
+		} finally{
 		}
 	}
 
@@ -105,16 +104,20 @@ public abstract class ExecuteJob {
 		System.out.println("endYear " + parameter.getEndYear());
 		init();
 		try{
-			switch (parameter.getDirectionType()) {
-			case Backward:
-				exeBackward();
-				break;
-			case Forward:
-				exeForward();
-				break;
-			default:
-				ConsoleOut.getInsance().info("Citation Type에 대한 실행 옵션이 아닙니다.");
-				break;
+			if(this.datas.size() > 0){
+				switch (parameter.getDirectionType()) {
+				case Backward:
+					exeBackward();
+					break;
+				case Forward:
+					exeForward();
+					break;
+				default:
+					ConsoleOut.getInsance().info("Citation Type에 대한 실행 옵션이 아닙니다.");
+					break;
+				}
+			}else{
+				ConsoleOut.getInsance().info("수집된 분석 대상 데이터가 존재하지 않습니다. 입력파일을 확인해 주세요.");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
