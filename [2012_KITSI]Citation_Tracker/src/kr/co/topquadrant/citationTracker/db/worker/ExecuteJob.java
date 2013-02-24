@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import kr.co.topquadrant.citationTracker.CSVReader;
 import kr.co.topquadrant.citationTracker.ExcelReader;
 import kr.co.topquadrant.citationTracker.ResultWriter;
 import kr.co.topquadrant.citationTracker.console.ConsoleOut;
@@ -53,9 +54,17 @@ public abstract class ExecuteJob {
 	private void readDataFile() throws Exception {
 		try {
 			ConsoleOut.getInsance().info("파일로부터 분석 대상 데이터를 수집하고 있습니다.");
-			ExcelReader er = new ExcelReader(this.parameter.getExcelFilePath());
+			ExcelReader er = new ExcelReader(this.parameter.getInputFilePath());
 			this.datas = er.getIDData();
 			ConsoleOut.getInsance().info("분석대상 데이터 수집을 완료하였습니다.");
+		} catch (IllegalArgumentException iae) {
+			// 엑셀로는 읽을수 없는 파일이다. 
+			
+			//이 파일이 csv 인가?
+			if(this.parameter.getInputFilePath().endsWith(".csv")){
+				CSVReader cr = new CSVReader(this.parameter.getInputFilePath());
+				this.datas = cr.getIDData();
+			}
 		} catch (Exception e) {
 			throw e;
 		}

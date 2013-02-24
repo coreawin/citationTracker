@@ -11,10 +11,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.examples.CellTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,29 +25,18 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * @history 2012. 11. 30. : 최초 작성 <br>
  * 
  */
-public class ExcelReader {
-
-	private File xls = null;
-	private List<List<String>> dataSet = new ArrayList<List<String>>();
+public class ExcelReader extends Readers{
 
 	public ExcelReader(String excelPath) throws Exception {
-		this.xls = new File(excelPath);
-		if (!this.xls.isFile()) {
-			throw new FileNotFoundException(excelPath + " 파일이 존재하지 않습니다.");
-		} else {
-			read();
-		}
+		super(excelPath);
 	}
 
-	public List<List<String>> getIDData() {
-		return dataSet;
-	}
-
-	private void read() throws Exception {
+	@Override
+	protected void read() throws Exception {
 		InputStream inp = null;
 		int sheetIdx = 0;
 		try {
-			inp = new FileInputStream(xls);
+			inp = new FileInputStream(super.file);
 			Workbook wb = WorkbookFactory.create(inp);
 			Sheet sheet = wb.getSheetAt(sheetIdx);
 			int cnt = 1;
@@ -94,21 +81,6 @@ public class ExcelReader {
 			if (inp != null)
 				inp.close();
 		}
-	}
-
-	private boolean checkEID(String s) {
-		if (s != null) {
-			s = s.trim();
-			try {
-				Long.parseLong(s);
-			} catch (Exception e) {
-				return false;
-			}
-			if (s.length() > 10 & s.length() < 13) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public static void main(String[] args) throws Exception {

@@ -95,8 +95,8 @@ public final class Definition {
 	 */
 	public static final class MainUIComboItemText {
 
-		public static final String[] CITATION_TRACKER_EXCEL_FILE_EXTENSION = { bundle
-				.getMessage("excelFile_FilterExtension") };
+		public static final String[] CITATION_TRACKER_EXCEL_FILE_EXTENSION = {bundle
+				.getMessage("excelFile_FilterExtension")};
 
 		public static final String[] CITATION_TRACKER_EXECUTE_TYPE = { bundle.getMessage("execute_Type1"),
 				bundle.getMessage("execute_Type2"), bundle.getMessage("execute_Type3"),

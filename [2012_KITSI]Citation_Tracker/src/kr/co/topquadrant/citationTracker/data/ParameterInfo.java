@@ -117,7 +117,7 @@ public class ParameterInfo {
 		return endYear;
 	}
 
-	public String getExcelFilePath() {
+	public String getInputFilePath() {
 		return excelFilePath;
 	}
 

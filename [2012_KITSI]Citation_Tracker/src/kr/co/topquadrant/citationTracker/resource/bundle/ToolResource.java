@@ -35,4 +35,21 @@ public class ToolResource {
 		}
 		return value;
 	}
+	
+	public String[] getMessageArray(String key) {
+		if (key == null || rb == null)
+			return null;
+		String value = null;
+		try {
+			if (rb.getObject(key) == null) {
+				return null;
+			}
+			value = "[" + key +"]";
+			value = new String(rb.getString(key).getBytes("8859_1"), "UTF-8");
+			return value.split(";");
+			
+		} catch (UnsupportedEncodingException e) {
+		}
+		return null;
+	}
 }
