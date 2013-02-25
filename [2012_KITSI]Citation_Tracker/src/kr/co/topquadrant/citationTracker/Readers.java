@@ -12,7 +12,7 @@ import java.util.List;
  * @author coreawin
  * @sinse 2013. 2. 25.
  * @version 1.0
- * @history 2013. 2. 25. : ÃÖÃÊ ÀÛ¼º <br>
+ * @history 2013. 2. 25. : ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ <br>
  * 
  */
 public abstract class Readers {
@@ -23,7 +23,7 @@ public abstract class Readers {
 	protected Readers(String filePath) throws Exception {
 		this.file = new File(filePath);
 		if (!this.file.isFile()) {
-			throw new FileNotFoundException(filePath + " ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			throw new FileNotFoundException(filePath + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		} else {
 			read();
 		}
@@ -43,7 +43,7 @@ public abstract class Readers {
 			} catch (Exception e) {
 				return false;
 			}
-			if (s.length() > 10 & s.length() < 13) {
+			if (s.length() >= 10 & s.length() < 13) {
 				return true;
 			}
 		}
